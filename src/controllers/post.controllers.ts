@@ -1,9 +1,8 @@
-
-import { Controller, Get, Post, Param, Put, Body, Delete, NotFoundException } from '@nestjs/common';
-import fetchposts from 'src/config/db';
+import { Controller, Get, Post, Param, Put, Body, Delete, NotFoundException, UseGuards } from '@nestjs/common';
+import fetchposts from 'src/config/posts.db';
 import { CreatePostDto } from 'src/dto/post-dto/create-post.dto';
 import { UpdatePostDto } from 'src/dto/post-dto/update-post.dto';
-
+import { TokenGuard } from 'src/guards/auth.guard'; 
 @Controller('posts')
 export class PostsControllers {
 
@@ -19,6 +18,7 @@ export class PostsControllers {
 // @DESC GETTING ALL THE POSTS 
 // @ROUTE /posts
   @Get()
+  @UseGuards(TokenGuard)
    findAll(): any[] {
     return this.posts;
   }
