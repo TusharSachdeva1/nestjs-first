@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { PostModule } from './modules/app.postmodules';
-import { UserModule } from './modules/app.usermodule';
+import { PostModule } from './posts/modules/app.postmodules';
+import { UserModule } from './users/modules/app.usermodule';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenGuard } from './guards/auth.guard';
+import { UserService } from './users/services/user.services';
 @Module({
   imports: [ JwtModule.register({
-                secret: 'your_secret_key_here', // replace with your own secret key
-                signOptions: { expiresIn: '1h' }, // optional, set token expiration time
+                secret: 'ABC123', 
+                signOptions: { expiresIn: '1h' },
               }),
               PostModule, UserModule],
   controllers: [],

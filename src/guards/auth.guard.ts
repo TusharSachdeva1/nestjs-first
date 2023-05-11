@@ -1,14 +1,13 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
-import { UserControllers } from "src/controllers/user.controllers"
-
-const userController = new UserControllers();
-const users = userController.getUsers();
+import { UserService } from 'src/users/services/user.services';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(@Inject(JwtService) private readonly jwtService: JwtService,
+              @Inject(UserService) private userService : UserService
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -19,6 +18,7 @@ export class TokenGuard implements CanActivate {
       return false;
     }
     try {
+      const users = this.userService.findAll();
       const decoded = this.jwtService.verify(token);      
       const user = users.find((u) => u.id === decoded.id);
       if (!user) {
