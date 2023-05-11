@@ -3,14 +3,17 @@ import { CreatePostDto } from 'src/posts/dto/post-dto/create-post.dto';
 import { UpdatePostDto } from 'src/posts/dto/post-dto/update-post.dto';
 import { TokenGuard } from '../../guards/auth.guard';
 import { PostService } from '../services/post.service';
+import { ThrottlerGuard } from '@nestjs/throttler';
+
 @Controller('posts')
+@UseGuards(ThrottlerGuard) 
 export class PostsControllers {
  
   constructor(private postservice : PostService) {}
 
 
 // @DESC GETTING ALL THE POSTS 
-// @ROUTE /posts
+// @ROUTE /posts  
   @Get()
   @UseGuards(TokenGuard)
    findAll(): any[] {

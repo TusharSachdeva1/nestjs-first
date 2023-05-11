@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Param, Put, Body, Delete, NotFoundException, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Param, Put, Body, Delete, NotFoundException, ParseIntPipe, UseGuards } from '@nestjs/common';
 import fetchusers from 'src/users/config/users.db';
 import { CreateUserDto } from 'src/users/dto/users-dto/create-users.dto';
 import { UpdateUserDto } from 'src/users/dto/users-dto/update-users.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../services/user.services';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
+
 @Controller('users')
+@UseGuards(ThrottlerGuard) 
 export class UserControllers {
  
   

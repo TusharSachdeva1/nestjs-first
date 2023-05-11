@@ -28,7 +28,6 @@ export class UserService {
     find_user_with_id(id) {
         let user = this.users.find(u => u.id === id);
         const token = this.jwtService.sign({ id: user.id });
-        console.log(token);
         if (!user) {
         throw new NotFoundException('User not found');
         }
